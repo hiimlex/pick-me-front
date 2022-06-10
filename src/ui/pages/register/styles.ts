@@ -1,24 +1,26 @@
 import styled from "styled-components";
+
 import {
   backgroundColorTheme,
   inputBackgroundColor,
   mainColorTheme,
-  secondaryColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";
 
-export const LoginContainer = styled.div`
+export const RegisterContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  max-height: 100%;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  padding: 120px 0;
+
   background: #2f0b51;
 `;
 
-export const LoginContent = styled.div`
+export const RegisterContent = styled.div`
   padding: 24px;
 
   display: flex;
@@ -32,7 +34,7 @@ export const LoginContent = styled.div`
   border: 1px solid ${mainColorTheme}33;
 `;
 
-export const LoginButton = styled.button`
+export const RegisterButton = styled.button`
   border: none;
   outline: none;
   padding: 12px;
@@ -53,20 +55,21 @@ export const LoginButton = styled.button`
   }
 `;
 
-export const LoginTitle = styled.h1`
+export const RegisterTitle = styled.h1`
   font-weight: 400;
   font-size: 32px;
   margin-bottom: 12px;
   color: ${mainColorTheme};
 `;
 
-export const LoginSubtitle = styled.h3`
+export const RegisterSubtitle = styled.h3`
   font-weight: 500;
   font-size: 16px;
+  color: ${secondaryTextColor};
   margin-bottom: 24px;
 `;
 
-export const LoginInput = styled.input`
+export const RegisterInput = styled.input`
   min-width: 380px;
   height: 42px;
   margin-bottom: 24px;
@@ -76,7 +79,26 @@ export const LoginInput = styled.input`
   font-size: 14px;
   font-weight: 500;
   padding: 4px 18px;
+  color: ${secondaryTextColor};
   background: ${inputBackgroundColor};
+
+  &:focus {
+    outline: 1px solid ${mainColorTheme}33;
+  }
+`;
+
+export const RegisterTextArea = styled.textarea`
+  min-width: 380px;
+  height: 88px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 18px;
+  background: ${inputBackgroundColor};
+  resize: none;
   color: ${secondaryTextColor};
 
   &:focus {
@@ -101,4 +123,17 @@ export const LinkAlternative = styled.span`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const RegisterForm = styled.form`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+
+export const RegisterFormSection = styled.label`
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: ${secondaryTextColor};
 `;

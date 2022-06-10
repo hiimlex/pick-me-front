@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import theme from "styled-theming";
 import AppRouter from "./app/router";
 import { RootState } from "./app/store";
 import { changeTheme, localStorageThemeKey } from "./app/store/slicers";
@@ -12,15 +10,18 @@ import GlobalStyle from "./ui/styles/global";
 function App() {
   const themeState = useSelector((state: RootState) => state.theme.value);
   const dispatch = useDispatch();
-  let localStorageTheme = localStorage.getItem(localStorageThemeKey);
 
   useEffect(() => {
+    let localStorageTheme = localStorage.getItem(localStorageThemeKey);
+
     if (localStorageTheme && localStorageTheme !== themeState) {
       dispatch(changeTheme(localStorageTheme));
-    } else {
+    }
+
+    if (!localStorageTheme) {
       localStorage.setItem(localStorageThemeKey, themeState);
     }
-  }, [localStorageTheme]);
+  }, [dispatch, themeState]);
 
   return (
     <ThemeProvider theme={{ theme: themeState }}>

@@ -1,19 +1,29 @@
 import theme from "styled-theming";
 
 export const mainColorTheme = theme("theme", {
-  light: "#2A0051",
+  light: "#2F0B51",
   dark: "#9B51e0",
 });
 
 export const secondaryColorTheme = theme("theme", {
-  light: "#9B51e0",
+  light: "#BB6BD9",
   dark: "#F2C94C",
 });
+
+export const inputBackgroundColor = theme("theme", {
+  light: "#f2f2f2",
+  dark: "#222",
+})
 
 export const mainTextColor = theme("theme", {
   light: "#333333",
   dark: "#ffffff",
 });
+
+export const secondaryTextColor = theme("theme", {
+  light: "#4F4F4F",
+  dark: "#E0E0E0",
+})
 
 export const backgroundColorTheme = theme("theme", {
   light: "#ffffff",

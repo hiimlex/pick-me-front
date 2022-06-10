@@ -1,21 +1,42 @@
-import React from "react";
-import { LoginButton, LoginContainer, LoginContent } from "./styles";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import {
+  AlternativeText,
+  LinkAlternative,
+  LoginButton,
+  LoginContainer,
+  LoginContent,
+  LoginInput,
+  LoginSubtitle,
+  LoginTitle,
+} from "./styles";
 
 const Login = () => {
+  const [toRegister, setToRegister] = useState(false);
+
+  const handleNavigateToRegister = () => {
+    setToRegister(true);
+  };
+
   return (
     <LoginContainer>
       <LoginContent>
-        <h1>pick.me</h1>
-        <h3>login with your account</h3>
+        <LoginTitle>
+          <b>pick</b>.me
+        </LoginTitle>
+        <LoginSubtitle>login with your account</LoginSubtitle>
 
-        <form>
-          <input type="text" />
-          <input type="text" />
-        </form>
+        <LoginInput type="text" placeholder="username" />
+        <LoginInput type="password" placeholder="password" />
         <LoginButton>login</LoginButton>
-        <span>or</span>
-        <span>sign up</span>
+        <AlternativeText>or</AlternativeText>
+
+        <LinkAlternative onClick={handleNavigateToRegister}>
+          sign up
+        </LinkAlternative>
       </LoginContent>
+
+      {toRegister && <Navigate to="/register" />}
     </LoginContainer>
   );
 };
