@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import {
   backgroundColorTheme,
@@ -6,10 +6,11 @@ import {
   mainColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";
+import { disabledButton } from "../login/styles";
 
-export const RegisterContainer = styled.div`
+export const RegisterContainer = styled.div<{ fullHeight: boolean }>`
   width: 100%;
-  max-height: 100%;
+  height: ${(props) => (props.fullHeight ? "100vh" : "100%")};
 
   display: flex;
   align-items: center;
@@ -34,7 +35,33 @@ export const RegisterContent = styled.div`
   border: 1px solid ${mainColorTheme}33;
 `;
 
-export const RegisterButton = styled.button`
+export const loader = css`
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  .loader {
+    animation: rotation 2s linear infinite;
+  }
+
+  pointer-events: none;
+  cursor: not-allowed;
+
+  &:hover {
+    background: ${mainColorTheme};
+    opacity: 0.5;
+  }
+`;
+
+export const RegisterButton = styled.button<{
+  isDisabled: boolean;
+  isLoading: boolean;
+}>`
   border: none;
   outline: none;
   padding: 12px;
@@ -53,6 +80,10 @@ export const RegisterButton = styled.button`
     background: ${mainColorTheme}dd;
     color: #fff;
   }
+
+  ${({ isDisabled }) => isDisabled && disabledButton}
+
+  ${({ isLoading }) => isLoading && loader}
 `;
 
 export const RegisterTitle = styled.h1`
@@ -136,4 +167,19 @@ export const RegisterFormSection = styled.label`
   font-size: 14px;
   font-weight: 600;
   color: ${secondaryTextColor};
+`;
+
+export const RegisteredContent = styled.div`
+  min-width: 380px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0;
+`;
+
+export const RegisteredInfo = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
 `;

@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   backgroundColorTheme,
   inputBackgroundColor,
   mainColorTheme,
-  secondaryColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";
+import { loader } from "../register/styles";
 
 export const LoginContainer = styled.div`
   width: 100%;
@@ -32,24 +32,14 @@ export const LoginContent = styled.div`
   border: 1px solid ${mainColorTheme}33;
 `;
 
-export const LoginButton = styled.button`
-  border: none;
-  outline: none;
-  padding: 12px;
-  width: 100%;
-  border-radius: 12px;
-  color: #fff;
-  background: ${mainColorTheme};
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 12px;
-
-  transition: all 0.2s ease-in-out;
+export const disabledButton = css`
+  background: #afafaf;
+  color: white;
+  cursor: not-allowed;
 
   &:hover {
-    background: ${mainColorTheme}dd;
-    color: #fff;
+    background: #afafaf;
+    color: white;
   }
 `;
 
@@ -63,7 +53,7 @@ export const LoginTitle = styled.h1`
 export const LoginSubtitle = styled.h3`
   font-weight: 500;
   font-size: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 `;
 
 export const LoginInput = styled.input`
@@ -84,6 +74,12 @@ export const LoginInput = styled.input`
   }
 `;
 
+export const LoginForm = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const AlternativeText = styled.span`
   font-size: 14px;
   font-weight: 500;
@@ -101,4 +97,31 @@ export const LinkAlternative = styled.span`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const LoginButton = styled.button<{
+  isDisabled: boolean;
+  isLoading: boolean;
+}>`
+  border: none;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 12px;
+  color: #fff;
+  background: ${mainColorTheme};
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 12px;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: ${mainColorTheme}dd;
+    color: #fff;
+  }
+
+  ${({ isDisabled }) => isDisabled && disabledButton};
+  ${({ isLoading }) => isLoading && loader};
 `;

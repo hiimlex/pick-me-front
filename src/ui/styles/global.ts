@@ -30,7 +30,7 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
   }
 
   *::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
     border-radius: 12px;
   }
 

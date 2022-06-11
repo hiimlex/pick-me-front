@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { GenericAction } from "..";
 
 export const localStorageThemeKey = "defaultTheme";
 const persistedTheme = localStorage.getItem(localStorageThemeKey);
@@ -9,7 +10,7 @@ export const themeSlice = createSlice({
     value: persistedTheme || "light",
   },
   reducers: {
-    changeTheme: (state, action) => {
+    changeTheme: (state, action: GenericAction<string>) => {
       state.value = action.payload;
       localStorage.setItem(localStorageThemeKey, action.payload);
     },

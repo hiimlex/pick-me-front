@@ -13,7 +13,7 @@ export const secondaryColorTheme = theme("theme", {
 export const inputBackgroundColor = theme("theme", {
   light: "#f2f2f2",
   dark: "#222",
-})
+});
 
 export const mainTextColor = theme("theme", {
   light: "#333333",
@@ -23,7 +23,7 @@ export const mainTextColor = theme("theme", {
 export const secondaryTextColor = theme("theme", {
   light: "#4F4F4F",
   dark: "#E0E0E0",
-})
+});
 
 export const backgroundColorTheme = theme("theme", {
   light: "#ffffff",
@@ -43,4 +43,27 @@ export const colorsTheme = theme.variants("theme", "color", {
     light: "#828282",
     dark: "#E0E0E0",
   },
+  error: {
+    light: "#ff5565",
+    dark: "#ff5565",
+  },
 });
+
+export type ColorsType = "boldText" | "semiText" | "text" | "error";
+
+export const notifierTypes = theme.variants("theme", "type", {
+  success: {
+    light: "#2F0B51",
+    dark: "#9B51e0",
+  },
+  error: {
+    light: "#ff5565",
+    dark: "#ff5565",
+  },
+  warning: {
+    light: "#ffc000",
+    dark: "#ffc000",
+  },
+});
+
+export type NotifierType = "success" | "error" | "warning";
