@@ -3,10 +3,11 @@ import { useRef, useState } from "react";
 import { Loader } from "react-feather";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NewUser } from "../../../app/models";
 import { createUser } from "../../../app/services";
 import { createNotification } from "../../../app/store/slicers/notifier.slicer";
+import Logo from "../../components/Logo";
 import {
   AlternativeText,
   LinkAlternative,
@@ -25,18 +26,14 @@ import {
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [toLogin, setToLogin] = useState(false);
   const [registering, setRegistering] = useState(false);
   const [registered, setRegistered] = useState(false);
   const { register, handleSubmit, formState, watch } = useForm({ mode: "all" });
 
   const password = useRef({});
   password.current = watch("password", "");
-
-  const handleNavigateToLogin = () => {
-    setToLogin(true);
-  };
 
   const handleRegisterForm = async (data: any) => {
     const { username, password, confirmPassword, email, name, bio } = data;
@@ -88,11 +85,19 @@ const Register = () => {
     }
   };
 
+  const handleNavigateToLogin = () => {
+    navigate("/login");
+  };
+
+  const handleNavigateToHome = () => {
+    navigate("/home");
+  };
+
   return (
     <RegisterContainer fullHeight={registered}>
       <RegisterContent>
         <RegisterTitle>
-          <b>pick</b>.me
+          <Logo clickable={true} callback={handleNavigateToHome} />
         </RegisterTitle>
 
         {!registered && (
@@ -164,8 +169,6 @@ const Register = () => {
           </RegisteredContent>
         )}
       </RegisterContent>
-
-      {toLogin && <Navigate to="/login" />}
     </RegisterContainer>
   );
 };

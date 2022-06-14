@@ -10,6 +10,8 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    outline: none;
+    border: none;
 
     scrollbar-width: auto;
     scrollbar-color: ${secondaryColorTheme};
@@ -21,8 +23,7 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
     font-size: 62.5%;
     background-color: ${backgroundColorTheme};
     color: ${mainTextColor};
-    outline: none;
-    border: none;
+ 
 
     * {
       font-family: 'Montserrat', sans-serif;

@@ -3,16 +3,17 @@ import { useState } from "react";
 import { Loader } from "react-feather";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoginModel } from "../../../app/models";
 import { getCurrentUser } from "../../../app/services";
 import {
   authenticateUser,
-  setAuthorizationToken,
+  setAuthorizationHeaderToken,
 } from "../../../app/services/auth";
 import { setAuthToken } from "../../../app/services/token";
 import { setUserState } from "../../../app/store/slicers";
 import { createNotification } from "../../../app/store/slicers/notifier.slicer";
+import Logo from "../../components/Logo";
 import {
   AlternativeText,
   LinkAlternative,
@@ -27,8 +28,8 @@ import {
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loggingIn, setLoggingIn] = useState(false);
-  const [toRegister, setToRegister] = useState(false);
   const {
     handleSubmit,
     register: registerField,
@@ -53,7 +54,7 @@ const Login = () => {
         const { data } = await authenticateUser(login);
 
         if (data) {
-          setAuthorizationToken(data.accessToken);
+          setAuthorizationHeaderToken(data.accessToken);
           setAuthToken(data.accessToken);
           setLoggingIn(false);
           await handleCurrentUser();
@@ -86,6 +87,7 @@ const Login = () => {
       if (data) {
         dispatch(setUserState(data));
         setLoggingIn(false);
+        navigate("/home");
       }
     } catch (error) {
       setLoggingIn(false);
@@ -107,17 +109,19 @@ const Login = () => {
     }
   };
 
-  const handleNavigateToRegister = () => {
-    setToRegister(true);
+  const handleNavigateToHome = () => {
+    navigate("/home");
   };
 
   return (
     <LoginContainer>
       <LoginContent>
         <LoginTitle>
-          <b>pick</b>.me
+          <Logo clickable={true} callback={handleNavigateToHome} />
         </LoginTitle>
-        <LoginSubtitle>login with your account</LoginSubtitle>
+        <LoginSubtitle style={{ marginBottom: loggingIn ? "12px" : "24px" }}>
+          login with your account
+        </LoginSubtitle>
 
         <LoginForm onSubmit={handleSubmit(onSubmitLoginForm)}>
           <LoginInput type="text" placeholder="username" {...usernameField} />
@@ -137,12 +141,14 @@ const Login = () => {
         </LoginForm>
         <AlternativeText>or</AlternativeText>
 
-        <LinkAlternative onClick={handleNavigateToRegister}>
+        <LinkAlternative
+          onClick={() => {
+            navigate("/register");
+          }}
+        >
           sign up
         </LinkAlternative>
       </LoginContent>
-
-      {toRegister && <Navigate to="/register" />}
     </LoginContainer>
   );
 };

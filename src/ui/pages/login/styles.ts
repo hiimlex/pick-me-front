@@ -5,7 +5,7 @@ import {
   mainColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";
-import { loader } from "../register/styles";
+import { loader } from "../Register/styles";
 
 export const LoginContainer = styled.div`
   width: 100%;
@@ -53,7 +53,6 @@ export const LoginTitle = styled.h1`
 export const LoginSubtitle = styled.h3`
   font-weight: 500;
   font-size: 16px;
-  margin-bottom: 12px;
 `;
 
 export const LoginInput = styled.input`

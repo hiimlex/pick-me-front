@@ -1,5 +1,4 @@
 import {
-  ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
   createSlice,
   SliceCaseReducers,

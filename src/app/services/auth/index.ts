@@ -6,7 +6,7 @@ async function authenticateUser(
   payload: LoginModel
 ): Promise<AxiosResponse<LoginResponse>> {
   try {
-    const response = await api.post("/api/auth/signin", payload);
+    const response = await api.post("/auth/signin", payload);
 
     return response;
   } catch (err: any) {
@@ -14,8 +14,12 @@ async function authenticateUser(
   }
 }
 
-function setAuthorizationToken(token: string): void {
+function setAuthorizationHeaderToken(token: string): void {
   api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
-export { authenticateUser, setAuthorizationToken };
+function removeAuthorizationHeaderToken(): void {
+  delete api.defaults.headers.common["Authorization"];
+}
+
+export { authenticateUser, setAuthorizationHeaderToken, removeAuthorizationHeaderToken };

@@ -1,11 +1,28 @@
 import axios, { AxiosError } from "axios";
-
-export const api = axios.create({
-  baseURL: "https://pickmeapi.herokuapp.com",
-});
+import store from "../../store";
+import { removeUserState } from "../../store/slicers";
+import { removeAuthorizationHeaderToken } from "../auth";
+import { removeAuthToken } from "../token";
 
 export function errToAxiosError(err: any): AxiosError {
   const { message, code, config, request, response } = err;
 
   return new AxiosError(message, code, config, request, response);
 }
+
+export const api = axios.create({
+  baseURL: "https://pickmeapi.herokuapp.com/api",
+});
+
+api.interceptors.response.use(
+  (response) => Promise.resolve(response),
+  (error: any) => {
+    if (error.response.status === 401 || error.response.status === 403) {
+      removeAuthToken();
+      removeAuthorizationHeaderToken();
+      store.dispatch(removeUserState());
+    }
+
+    return Promise.reject(error);
+  }
+);

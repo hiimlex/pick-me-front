@@ -5,7 +5,7 @@ function getAuthToken(): string {
 }
 
 function setAuthToken(token: string): void {
-  localStorage.getItem(TOKEN_KEY);
+  localStorage.setItem(TOKEN_KEY, token);
 }
 
 function removeAuthToken(): void {

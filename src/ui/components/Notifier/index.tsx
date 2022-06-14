@@ -9,12 +9,18 @@ export type NotifierPosition = "top" | "bottom";
 export interface NotifierProps {
   id: number;
   message: string;
-  type: NotifierType;
-  position: NotifierPosition;
-  duration: number;
+  type?: NotifierType;
+  position?: NotifierPosition;
+  duration?: number;
 }
 
-const Notifier = ({ message, type, position, duration, id }: NotifierProps) => {
+const Notifier = ({
+  message,
+  type = "success",
+  position = "bottom",
+  duration = 3000,
+  id,
+}: NotifierProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

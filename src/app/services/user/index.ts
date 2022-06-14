@@ -4,7 +4,7 @@ import { api, errToAxiosError } from "../api";
 
 async function createUser(user: NewUser): Promise<AxiosResponse<User>> {
   try {
-    const response = await api.post("/api/users", user);
+    const response = await api.post("/users", user);
 
     return response;
   } catch (err: any) {
@@ -14,7 +14,7 @@ async function createUser(user: NewUser): Promise<AxiosResponse<User>> {
 
 async function getCurrentUser(): Promise<AxiosResponse<User>> {
   try {
-    const response = await api.get("/api/auth/currentUser");
+    const response = await api.get("/auth/currentUser");
 
     return response;
   } catch (err: any) {

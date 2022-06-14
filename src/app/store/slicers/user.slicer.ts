@@ -1,4 +1,9 @@
-import { createSlice, SliceCaseReducers } from "@reduxjs/toolkit";
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+  createSlice,
+  SliceCaseReducers,
+} from "@reduxjs/toolkit";
 import { GenericAction } from "..";
 import { User } from "../../models";
 
@@ -17,10 +22,17 @@ export const userSlice = createSlice<
     setUserState: (state, action: GenericAction<User>) => {
       state.user = action.payload;
     },
+    removeUserState: (state) => {
+      state.user = {} as User;
+    },
   },
 });
 
-export const { setUserState } = userSlice.actions;
+export const setUserState: ActionCreatorWithPayload<User, string> = userSlice
+  .actions.setUserState as any;
+
+export const removeUserState: ActionCreatorWithoutPayload<any> = userSlice
+  .actions.removeUserState as any;
 
 const userReducer = userSlice.reducer;
 
