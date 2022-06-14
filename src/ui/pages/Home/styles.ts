@@ -3,7 +3,6 @@ import { mainColorTheme, mainTextColor } from "../../styles/theme";
 
 export const HomeContainer = styled.div`
   width: 100%;
-  height: 100vh;
 `;
 
 export const HomeContent = styled.div`

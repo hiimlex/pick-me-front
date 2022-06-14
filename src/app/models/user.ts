@@ -1,10 +1,14 @@
-export interface User {
+export interface IUser {
   id: string;
   name: string;
   email: string;
   username: string;
   bio: string;
-  avatar: string;
+  avatar: {
+    image: Buffer;
+    createdAt: string;
+    updatedAt: string;
+  };
   token: string;
 }
 

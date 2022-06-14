@@ -5,10 +5,10 @@ import {
   SliceCaseReducers,
 } from "@reduxjs/toolkit";
 import { GenericAction } from "..";
-import { User } from "../../models";
+import { IUser } from "../../models";
 
 interface UserReducerState {
-  user: User;
+  user: IUser;
 }
 
 export const userSlice = createSlice<
@@ -19,16 +19,16 @@ export const userSlice = createSlice<
   name: "user",
   initialState: {} as UserReducerState,
   reducers: {
-    setUserState: (state, action: GenericAction<User>) => {
+    setUserState: (state, action: GenericAction<IUser>) => {
       state.user = action.payload;
     },
     removeUserState: (state) => {
-      state.user = {} as User;
+      state.user = {} as IUser;
     },
   },
 });
 
-export const setUserState: ActionCreatorWithPayload<User, string> = userSlice
+export const setUserState: ActionCreatorWithPayload<IUser, string> = userSlice
   .actions.setUserState as any;
 
 export const removeUserState: ActionCreatorWithoutPayload<any> = userSlice

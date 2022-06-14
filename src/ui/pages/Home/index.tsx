@@ -15,7 +15,7 @@ import {
 
 type CategoryFilter = "all" | "pictures" | "services" | "products";
 
-const Home = () => {
+const HomePage = () => {
   const [filter, setFilter] = useState<CategoryFilter>("all");
   const [products, setProducts] = useState<any[]>([]);
   const dispatch = useDispatch();
@@ -49,39 +49,44 @@ const Home = () => {
   }, [handleGetProducts]);
 
   return (
-    <HomeContainer>
+    <>
       <Header />
-      <HomeContent>
-        <HomeContentTitle>
-          <b>for you</b> arts
-        </HomeContentTitle>
-        <HomeFilters>
-          <Filter active={filter === "all"} onClick={() => handleFilter("all")}>
-            all
-          </Filter>
-          <Filter
-            active={filter === "pictures"}
-            onClick={() => handleFilter("pictures")}
-          >
-            pictures
-          </Filter>
-          <Filter
-            active={filter === "services"}
-            onClick={() => handleFilter("services")}
-          >
-            services
-          </Filter>
-          <Filter
-            active={filter === "products"}
-            onClick={() => handleFilter("products")}
-          >
-            products
-          </Filter>
-        </HomeFilters>
-        <HomeProductsContainer></HomeProductsContainer>
-      </HomeContent>
-    </HomeContainer>
+      <HomeContainer>
+        <HomeContent>
+          <HomeContentTitle>
+            <b>for you</b> arts
+          </HomeContentTitle>
+          <HomeFilters>
+            <Filter
+              active={filter === "all"}
+              onClick={() => handleFilter("all")}
+            >
+              all
+            </Filter>
+            <Filter
+              active={filter === "pictures"}
+              onClick={() => handleFilter("pictures")}
+            >
+              pictures
+            </Filter>
+            <Filter
+              active={filter === "services"}
+              onClick={() => handleFilter("services")}
+            >
+              services
+            </Filter>
+            <Filter
+              active={filter === "products"}
+              onClick={() => handleFilter("products")}
+            >
+              products
+            </Filter>
+          </HomeFilters>
+          <HomeProductsContainer></HomeProductsContainer>
+        </HomeContent>
+      </HomeContainer>
+    </>
   );
 };
 
-export default Home;
+export default HomePage;

@@ -28,6 +28,10 @@ const UserControl = () => {
     setDropdown((curr) => !curr);
   };
 
+  const handleNavigateToProfile = () => {
+    navigate(`/profile/${user.id}`);
+  };
+
   const handleLogout = () => {
     dispatch(removeUserState());
     removeAuthToken();
@@ -60,9 +64,11 @@ const UserControl = () => {
       </UserControlPanel>
       {dropdown && (
         <DropdownContainer ref={dropDownRef}>
-          <DropdownLink>profile</DropdownLink>
+          <DropdownLink onClick={() => handleNavigateToProfile()}>
+            profile
+          </DropdownLink>
           <DropdownLink>favorites</DropdownLink>
-          <DropdownLink onClick={handleLogout}>logout</DropdownLink>
+          <DropdownLink onClick={() => handleLogout()}>logout</DropdownLink>
         </DropdownContainer>
       )}
     </UserControlContainer>

@@ -11,7 +11,7 @@ export function errToAxiosError(err: any): AxiosError {
 }
 
 export const api = axios.create({
-  baseURL: "https://pickmeapi.herokuapp.com/api",
+  baseURL: "http://localhost:3000/api",
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",

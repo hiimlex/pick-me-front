@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import {
   backgroundColorTheme,
-  colorsTheme,
   mainColorTheme,
   mainTextColor,
 } from "../../styles/theme";
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.header`
   width: 100%;
 
   display: flex;
@@ -17,6 +16,10 @@ export const HeaderContainer = styled.div`
   border-bottom: 1px solid ${mainColorTheme}33;
 
   padding: 0 64px;
+
+  @media (max-width: 768px) {
+    padding: 0 32px;
+  }
 `;
 
 export const HeaderContent = styled.div`
@@ -33,7 +36,7 @@ export const HeaderContent = styled.div`
 export const SearchInput = styled.input`
   height: 42px;
   border-radius: 32px;
-  border: 1px solid ${mainTextColor}33  ;
+  border: 1px solid ${mainTextColor}33;
   min-width: 220px;
   width: 25%;
   max-width: 420px;

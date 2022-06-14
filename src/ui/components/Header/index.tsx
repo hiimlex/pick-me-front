@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Logo size={28} />
+        <Logo size={28} clickable={true} callback={() => navigate("/home")} />
         <SearchInput placeholder="search for a art" />
         <HeaderNav>
           <HeaderNavLinks>

@@ -1,16 +1,17 @@
 import { AxiosError } from "axios";
-import { ReactElement, useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { ReactElement, useCallback, useEffect, useState } from "react";
+import { Loader } from "react-feather";
+import { useDispatch, useSelector } from "react-redux";
+import { LoaderContainer } from "../../ui/styles/global";
 import {
   getAuthToken,
   getCurrentUser,
+  removeAuthorizationHeaderToken,
   removeAuthToken,
   setAuthorizationHeaderToken,
 } from "../services";
 import { RootState } from "../store";
-import { setUserState } from "../store/slicers";
+import { removeUserState, setUserState } from "../store/slicers";
 import { createNotification } from "../store/slicers/notifier.slicer";
 
 interface ProtectedRouteProps {
@@ -19,50 +20,62 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const token = getAuthToken();
-  const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user.user);
+
+  const [show, setShow] = useState(false);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const handleCurrentUserData = useCallback(async () => {
     if (token) {
       setAuthorizationHeaderToken(token);
-    }
 
-    try {
-      const { data } = await getCurrentUser();
+      try {
+        const { data } = await getCurrentUser();
 
-      if (data) {
-        dispatch(setUserState(data));
-      }
-    } catch (err: any) {
-      if (err instanceof AxiosError) {
-        const { response } = err;
-
-        if (response) {
-          console.log(response.data.error);
-          dispatch(createNotification({ message: response.data.error }));
+        if (data) {
+          dispatch(setUserState(data));
+          setShow(true);
         }
+      } catch (err: any) {
+        if (err instanceof AxiosError) {
+          const { response } = err;
 
-        removeAuthToken();
+          if (response) {
+            dispatch(createNotification({ message: response.data.message }));
+          }
 
-        navigate("/login");
+          setShow(true);
+          dispatch(removeUserState());
+          removeAuthToken();
+          removeAuthorizationHeaderToken();
+        }
       }
     }
-  }, [dispatch, navigate, token]);
+  }, [dispatch, token]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (token && token.length && !user) {
+    if (token && !user) {
       handleCurrentUserData();
     }
-  });
+  }, [handleCurrentUserData, token, user]);
 
   if (!token) {
-    return <Navigate to="/login" />;
+    return children;
   }
 
-  return children;
+  if (user) {
+    return children;
+  }
+
+  return show ? (
+    children
+  ) : (
+    <LoaderContainer>
+      <Loader className="loaderApp" />
+    </LoaderContainer>
+  );
 };
 
 export { ProtectedRoute };

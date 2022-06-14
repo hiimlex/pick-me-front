@@ -1,14 +1,31 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "../../ui/pages/Home";
-import Login from "../../ui/pages/Login";
-import Register from "../../ui/pages/Register";
+import HomePage from "../../ui/pages/Home";
+import LoginPage from "../../ui/pages/Login";
+import ProfilePage from "../../ui/pages/Profile";
+import RegisterPage from "../../ui/pages/Register";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/register" element={<Register />}></Route>
-      <Route path="/login" element={<Login />}></Route>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route path="/register" element={<RegisterPage />}></Route>
+      <Route path="/login" element={<LoginPage />}></Route>
+      <Route
+        path="/profile/:username"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      ></Route>
       <Route path="*" element={<Navigate to="/" replace />}></Route>
     </Routes>
   );

@@ -79,19 +79,13 @@ export const LoginForm = styled.form`
   flex-direction: column;
 `;
 
-export const AlternativeText = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 12px;
-  color: ${secondaryTextColor};
-`;
-
 export const LinkAlternative = styled.span`
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   color: ${mainColorTheme};
   cursor: pointer;
+  margin-top: 12px;
 
   &:hover {
     text-decoration: underline;

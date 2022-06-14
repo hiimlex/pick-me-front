@@ -1,6 +1,10 @@
-import { createGlobalStyle, GlobalStyleComponent } from "styled-components";
+import styled, {
+  createGlobalStyle,
+  GlobalStyleComponent,
+} from "styled-components";
 import {
   backgroundColorTheme,
+  mainColorTheme,
   mainTextColor,
   secondaryColorTheme,
 } from "./theme";
@@ -28,6 +32,22 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
     * {
       font-family: 'Montserrat', sans-serif;
     }
+    
+
+    input:-webkit-autofill,
+		input:-webkit-autofill:hover,
+		input:-webkit-autofill:focus,
+		textarea:-webkit-autofill,
+		textarea:-webkit-autofill:hover,
+		textarea:-webkit-autofill:focus,
+		select:-webkit-autofill,
+		select:-webkit-autofill:hover,
+		select:-webkit-autofill:focus {
+			border: none;
+			-webkit-text-fill-color: ${mainTextColor};
+			-webkit-box-shadow: transparent;
+			transition: background-color 5000s ease-in-out 0s;
+		}
   }
 
   *::-webkit-scrollbar {
@@ -46,4 +66,35 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle;
+export const LoaderContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: ${backgroundColorTheme};
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  .loaderApp {
+    fill: ${mainColorTheme} !important;
+    animation: rotation 2s linear infinite;
+    transform: scale(0) !important;
+  }
+
+  pointer-events: none;
+`;
+
+export { GlobalStyle };

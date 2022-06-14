@@ -4,13 +4,15 @@ import {
   backgroundColorTheme,
   inputBackgroundColor,
   mainColorTheme,
+  mainTextColor,
+  secondaryColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";
 import { disabledButton } from "../Login/styles";
 
-export const RegisterContainer = styled.div<{ fullHeight: boolean }>`
+export const RegisterContainer = styled.div`
   width: 100%;
-  height: ${(props) => (props.fullHeight ? "100vh" : "100%")};
+  height: 100vh;
 
   display: flex;
   align-items: center;
@@ -56,34 +58,6 @@ export const loader = css`
     background: ${mainColorTheme};
     opacity: 0.5;
   }
-`;
-
-export const RegisterButton = styled.button<{
-  isDisabled: boolean;
-  isLoading: boolean;
-}>`
-  border: none;
-  outline: none;
-  padding: 12px;
-  width: 100%;
-  border-radius: 12px;
-  color: #fff;
-  background: ${mainColorTheme};
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 12px;
-
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background: ${mainColorTheme}dd;
-    color: #fff;
-  }
-
-  ${({ isDisabled }) => isDisabled && disabledButton}
-
-  ${({ isLoading }) => isLoading && loader}
 `;
 
 export const RegisterTitle = styled.h1`
@@ -137,19 +111,13 @@ export const RegisterTextArea = styled.textarea`
   }
 `;
 
-export const AlternativeText = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 12px;
-  color: ${secondaryTextColor};
-`;
-
 export const LinkAlternative = styled.span`
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   color: ${mainColorTheme};
   cursor: pointer;
+  margin-top: 12px;
 
   &:hover {
     text-decoration: underline;
@@ -175,11 +143,126 @@ export const RegisteredContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 24px 0;
+  margin-top: 0;
+  margin-bottom: 12px;
 `;
 
 export const RegisteredInfo = styled.span`
-  font-size: 16px;
-  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+
+  * {
+    margin: 2px 0;
+  }
+`;
+
+export const UploadFileButton = styled.div<{ file?: File }>`
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: ${inputBackgroundColor};
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    outline: 2px solid ${secondaryColorTheme};
+    outline-offset: 4px;
+  }
+
+  ${({ file }) =>
+    !!file &&
+    `
+    background: url(${URL.createObjectURL(file)}) no-repeat center;
+    background-size: 82px 82px;
+  `}
+`;
+
+export const SendButton = styled.button`
+  color: ${secondaryColorTheme};
+  background: transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 8px 0;
+  border-radius: 8px;
+
+  &:hover {
+    background: ${secondaryColorTheme}11;
+    color: ${secondaryColorTheme};
+  }
+
+  &:disabled {
+    color: ${secondaryTextColor}88 !important;
+    cursor: not-allowed;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+`;
+
+export const RegisterFormActions = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const BackButton = styled.div`
+  border: none;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 12px;
+  color: ${secondaryColorTheme};
+  background: transparent;
+  border: 1px solid ${secondaryColorTheme};
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 12px;
+
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+
+  &:hover {
+    background: ${secondaryColorTheme}11;
+    color: ${secondaryColorTheme};
+  }
+`;
+
+export const RegisterButton = styled.button<{
+  isDisabled: boolean;
+  isLoading: boolean;
+}>`
+  border: none;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 12px;
+  color: #fff;
+  background: ${mainColorTheme};
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 12px;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: ${mainColorTheme}dd;
+    color: #fff;
+  }
+
+  ${({ isDisabled }) => isDisabled && disabledButton}
+
+  ${({ isLoading }) => isLoading && loader}
 `;

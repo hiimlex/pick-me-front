@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
-import { NewUser, User } from "../../models";
+import { IUser, NewUser } from "../../models";
 import { api, errToAxiosError } from "../api";
 
-async function createUser(user: NewUser): Promise<AxiosResponse<User>> {
+async function createUser(user: NewUser): Promise<AxiosResponse<IUser>> {
   try {
     const response = await api.post("/users", user);
 
@@ -12,7 +12,26 @@ async function createUser(user: NewUser): Promise<AxiosResponse<User>> {
   }
 }
 
-async function getCurrentUser(): Promise<AxiosResponse<User>> {
+async function uploadUserAvatar(
+  id: string,
+  file: File
+): Promise<AxiosResponse<{ file: any }>> {
+  try {
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const response = await api.post("/files/upload/user/" + id, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    return response;
+  } catch (err) {
+    throw errToAxiosError(err);
+  }
+}
+
+async function getCurrentUser(): Promise<AxiosResponse<IUser>> {
   try {
     const response = await api.get("/auth/currentUser");
 
@@ -22,4 +41,4 @@ async function getCurrentUser(): Promise<AxiosResponse<User>> {
   }
 }
 
-export { createUser, getCurrentUser };
+export { createUser, getCurrentUser, uploadUserAvatar };

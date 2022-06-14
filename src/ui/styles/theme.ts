@@ -1,7 +1,7 @@
 import theme from "styled-theming";
 
 export const mainColorTheme = theme("theme", {
-  light: "#2F0B51",
+  light: "#2A0051",
   dark: "#9B51e0",
 });
 

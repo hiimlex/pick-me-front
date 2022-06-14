@@ -15,7 +15,6 @@ import { setUserState } from "../../../app/store/slicers";
 import { createNotification } from "../../../app/store/slicers/notifier.slicer";
 import Logo from "../../components/Logo";
 import {
-  AlternativeText,
   LinkAlternative,
   LoginButton,
   LoginContainer,
@@ -26,7 +25,7 @@ import {
   LoginTitle,
 } from "./styles";
 
-const Login = () => {
+const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loggingIn, setLoggingIn] = useState(false);
@@ -139,7 +138,6 @@ const Login = () => {
             {loggingIn ? <Loader className="loader" /> : "login"}
           </LoginButton>
         </LoginForm>
-        <AlternativeText>or</AlternativeText>
 
         <LinkAlternative
           onClick={() => {
@@ -153,4 +151,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
