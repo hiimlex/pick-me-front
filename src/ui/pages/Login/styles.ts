@@ -33,13 +33,13 @@ export const LoginContent = styled.div`
 `;
 
 export const disabledButton = css`
-  background: #afafaf;
-  color: white;
+  background: ${mainColorTheme}55;
+  color: ${secondaryTextColor}88;
   cursor: not-allowed;
 
   &:hover {
-    background: #afafaf;
-    color: white;
+    background: ${mainColorTheme}55;
+    color: ${secondaryTextColor}88;
   }
 `;
 

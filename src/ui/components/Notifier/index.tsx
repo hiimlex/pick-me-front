@@ -31,7 +31,7 @@ const Notifier = ({
 
   return (
     <NotificationContent type={type} position={position}>
-      {message}
+      {message.toLowerCase()}
     </NotificationContent>
   );
 };

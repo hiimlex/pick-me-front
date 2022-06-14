@@ -6,7 +6,7 @@ import {
   mainColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";
-import { disabledButton } from "../login/styles";
+import { disabledButton } from "../Login/styles";
 
 export const RegisterContainer = styled.div<{ fullHeight: boolean }>`
   width: 100%;

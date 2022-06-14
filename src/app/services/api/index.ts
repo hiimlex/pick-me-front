@@ -12,6 +12,10 @@ export function errToAxiosError(err: any): AxiosError {
 
 export const api = axios.create({
   baseURL: "https://pickmeapi.herokuapp.com/api",
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
 });
 
 api.interceptors.response.use(

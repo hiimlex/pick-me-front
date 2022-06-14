@@ -11,7 +11,7 @@ export const secondaryColorTheme = theme("theme", {
 });
 
 export const inputBackgroundColor = theme("theme", {
-  light: "#f2f2f2",
+  light: "#e1e1e1",
   dark: "#222",
 });
 
