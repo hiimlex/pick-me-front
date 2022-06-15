@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-
 import {
   backgroundColorTheme,
   inputBackgroundColor,
@@ -75,7 +74,7 @@ export const RegisterSubtitle = styled.h3`
 `;
 
 export const RegisterInput = styled.input`
-  min-width: 380px;
+  min-width: 320px;
   height: 42px;
   margin-bottom: 24px;
   border-radius: 12px;
@@ -93,7 +92,7 @@ export const RegisterInput = styled.input`
 `;
 
 export const RegisterTextArea = styled.textarea`
-  min-width: 380px;
+  min-width: 320px;
   height: 88px;
   margin-bottom: 24px;
   border-radius: 12px;
@@ -147,15 +146,21 @@ export const RegisteredContent = styled.div`
   margin-bottom: 12px;
 `;
 
-export const RegisteredInfo = styled.span`
+export const RegisteredInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  min-width: 320px;
 
-  * {
-    margin: 2px 0;
-  }
+  margin-bottom: 24px;
+`;
+
+export const RegisteredInfoText = styled.span`
+  margin-top: 24px;
+  font-size: 16px;
+  font-weight: 400;
+  color: ${mainTextColor};
 `;
 
 export const UploadFileButton = styled.div<{ file?: File }>`

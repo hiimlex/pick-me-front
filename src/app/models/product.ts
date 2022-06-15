@@ -5,6 +5,7 @@ export interface IProduct {
   description: string;
   price: number;
   quantity: number;
+  image: Buffer;
   owner: {
     _id: string;
     name: string;
@@ -18,4 +19,13 @@ export interface IProduct {
 export interface ICategory {
   _id: string;
   name: string;
+}
+
+export interface NewProduct {
+  category: string;
+  name: string;
+  description: string;
+  price: string;
+  quantity: string;
+  image: FileList;
 }

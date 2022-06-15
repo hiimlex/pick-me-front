@@ -2,9 +2,20 @@ import { AxiosResponse } from "axios";
 import { IUser, NewUser } from "../../models";
 import { api, errToAxiosError } from "../api";
 
-async function createUser(user: NewUser): Promise<AxiosResponse<IUser>> {
+async function createUser(
+  user: NewUser
+): Promise<AxiosResponse<{ createdUser: IUser }>> {
   try {
-    const response = await api.post("/users", user);
+    const formData = new FormData();
+
+    const { avatar, ...newUser } = user;
+
+    formData.append("file", avatar);
+    formData.append("data", JSON.stringify(newUser));
+
+    const response = await api.post("/users", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
     return response;
   } catch (err: any) {

@@ -64,7 +64,6 @@ export const HeaderNavLinks = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  margin-right: 32px;
 
   * {
     margin: 0 24px;

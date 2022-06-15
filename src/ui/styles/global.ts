@@ -45,7 +45,6 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
 		select:-webkit-autofill:focus {
 			border: none;
 			-webkit-text-fill-color: ${mainTextColor};
-			-webkit-box-shadow: transparent;
 			transition: background-color 5000s ease-in-out 0s;
 		}
   }
@@ -63,6 +62,16 @@ const GlobalStyle: GlobalStyleComponent<any, any> = createGlobalStyle`
   *::-webkit-scrollbar-thumb {
     background-color: ${secondaryColorTheme};
     border-radius: 10px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield !important;
   }
 `;
 

@@ -16,7 +16,7 @@ export const inputBackgroundColor = theme("theme", {
 });
 
 export const mainTextColor = theme("theme", {
-  light: "#222",
+  light: "#222222",
   dark: "#ffffff",
 });
 
@@ -67,3 +67,11 @@ export const notifierTypes = theme.variants("theme", "type", {
 });
 
 export type NotifierType = "success" | "error" | "warning";
+
+export const productsColorArr = [
+  "#2F80ED",
+  "#219653",
+  "#F2C94C",
+  "#EB5757",
+  "#9B51e0",
+];

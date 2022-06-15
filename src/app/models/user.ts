@@ -18,5 +18,5 @@ export interface NewUser {
   username: string;
   password: string;
   bio: string;
-  avatar?: string;
+  avatar: File;
 }

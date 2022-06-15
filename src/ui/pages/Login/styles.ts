@@ -118,3 +118,5 @@ export const LoginButton = styled.button<{
   ${({ isDisabled }) => isDisabled && disabledButton};
   ${({ isLoading }) => isLoading && loader};
 `;
+
+export const CoreButton = LoginButton;

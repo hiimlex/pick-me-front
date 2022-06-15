@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAuthToken } from "../../../app/services";
 import { RootState } from "../../../app/store";
-import CreateArtModal from "../CreateArtModal";
 import Logo from "../Logo";
+import ShareModal from "../ShareModal";
 import ThemeSwitcher from "../ThemeSwitcher";
 import UserControl from "../UserControl";
 import {
@@ -18,12 +18,16 @@ import {
 const Header = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const hasToken = (): boolean => {
     const token = getAuthToken();
 
     return !!token;
+  };
+
+  const handleShowShareModal = () => {
+    setShowModal(true);
   };
 
   const hasUser = (): boolean => {
@@ -38,7 +42,11 @@ const Header = () => {
           <SearchInput placeholder="search for a art" />
           <HeaderNav>
             <HeaderNavLinks>
-              {hasUser() && <span>show your art</span>}
+              {hasUser() && (
+                <span onClick={() => handleShowShareModal()}>
+                  show your art
+                </span>
+              )}
               {!hasToken() && !hasUser() && (
                 <span onClick={() => navigate("/login")}>login</span>
               )}
@@ -51,7 +59,7 @@ const Header = () => {
           </HeaderNav>
         </HeaderContent>
       </HeaderContainer>
-      {showModal && <CreateArtModal />}
+      {showModal && <ShareModal hideModal={setShowModal} />}
     </>
   );
 };

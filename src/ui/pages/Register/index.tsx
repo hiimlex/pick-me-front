@@ -3,15 +3,10 @@ import { useRef, useState } from "react";
 import { Loader, User } from "react-feather";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { IUser, NewUser } from "../../../app/models";
-import {
-  authenticateUser,
-  createUser,
-  removeAuthorizationHeaderToken,
-  setAuthorizationHeaderToken,
-  uploadUserAvatar,
-} from "../../../app/services";
+import { createUser } from "../../../app/services";
 import { createNotification } from "../../../app/store/slicers/notifier.slicer";
 import Logo from "../../components/Logo";
 import {
@@ -22,6 +17,7 @@ import {
   RegisterContent,
   RegisteredContent,
   RegisteredInfo,
+  RegisteredInfoText,
   RegisterForm,
   RegisterFormActions,
   RegisterFormSection,
@@ -29,7 +25,6 @@ import {
   RegisterSubtitle,
   RegisterTextArea,
   RegisterTitle,
-  SendButton,
   UploadFileButton,
 } from "./styles";
 
@@ -42,7 +37,6 @@ const RegisterPage = () => {
   const [user, setUser] = useState<IUser>();
   const [partialUser, setPartialUser] = useState<{ [key: string]: any }>({});
   const [registering, setRegistering] = useState(false);
-  const [uploading, setUploading] = useState(false);
 
   const stepOneForm: UseFormReturn = useForm({ mode: "all" });
   const stepTwoForm: UseFormReturn = useForm({ mode: "all" });
@@ -65,7 +59,7 @@ const RegisterPage = () => {
   };
 
   const validSetStep = (current: number, newValue: number): number => {
-    if (newValue > 0 && newValue <= 3) {
+    if (newValue > 0 && newValue <= 4) {
       return newValue;
     } else {
       return current;
@@ -88,13 +82,28 @@ const RegisterPage = () => {
       return newValue;
     });
 
-    await handleCreateUser({ ...data, ...partialUser });
+    setStep((currentValue) => validSetStep(currentValue, currentValue + 1));
   };
 
-  const handleCreateUser = async (data: any) => {
-    const { username, password, confirmPassword, email, name, bio } = data;
+  const canCreateUser = (): boolean => {
+    const { email, password, confirmPassword, username, name, bio } =
+      partialUser;
 
-    setRegistering(true);
+    return (
+      !!file &&
+      !!email &&
+      !!password &&
+      !!confirmPassword &&
+      confirmPassword === password &&
+      !!username &&
+      !!name &&
+      !!bio
+    );
+  };
+
+  const handleCreateUser = async () => {
+    const { username, password, confirmPassword, email, name, bio } =
+      partialUser;
 
     if (
       username &&
@@ -103,14 +112,18 @@ const RegisterPage = () => {
       email &&
       name &&
       bio &&
-      password === confirmPassword
+      password === confirmPassword &&
+      file
     ) {
+      setRegistering(true);
+
       const newUser: NewUser = {
         username,
         password,
         email,
         name,
         bio,
+        avatar: file,
       };
 
       try {
@@ -118,7 +131,6 @@ const RegisterPage = () => {
 
         if (data) {
           setRegistering(false);
-          setUser(data);
           setStep((currentValue) =>
             validSetStep(currentValue, currentValue + 1)
           );
@@ -136,60 +148,6 @@ const RegisterPage = () => {
                 message: response.data.error,
                 duration: 5000,
                 position: "bottom",
-              })
-            );
-          }
-        }
-      }
-    } else {
-      setRegistering(false);
-    }
-  };
-
-  const handleUploadUserAvatar = async (e: any) => {
-    e.preventDefault();
-
-    if (file && user && !uploading) {
-      setUploading(true);
-
-      try {
-        const {
-          data: { accessToken },
-        } = await authenticateUser({
-          password: partialUser.password,
-          username: partialUser.username,
-        });
-
-        if (accessToken) {
-          setAuthorizationHeaderToken(accessToken);
-
-          const { data: avatar } = await uploadUserAvatar(user.id, file);
-
-          if (avatar) {
-            dispatch(
-              createNotification({
-                message: "uou, now you have a profile picture!",
-                type: "success",
-              })
-            );
-
-            setUploading(false);
-
-            setTimeout(() => {
-              removeAuthorizationHeaderToken();
-            });
-          }
-        }
-      } catch (err: any) {
-        setUploading(false);
-
-        if (err instanceof AxiosError) {
-          const { response } = err;
-
-          if (response) {
-            dispatch(
-              createNotification({
-                message: response.data.error,
               })
             );
           }
@@ -213,11 +171,11 @@ const RegisterPage = () => {
           <Logo clickable={true} callback={() => handleNavigateToHome()} />
         </RegisterTitle>
 
-        <RegisterSubtitle>
-          {step === 3
-            ? "your account was created, please choose your avatar"
-            : "sign up your account"}
-        </RegisterSubtitle>
+        {step !== 4 && (
+          <RegisterSubtitle>
+            {step === 3 ? "please choose your avatar" : "sign up your account"}
+          </RegisterSubtitle>
+        )}
         {step === 1 && (
           <RegisterForm onSubmit={stepOneForm.handleSubmit(handleStepOneForm)}>
             <RegisterFormSection>profile info</RegisterFormSection>
@@ -240,107 +198,108 @@ const RegisterPage = () => {
               type="submit"
               disabled={!stepOneForm.formState.isValid}
               isDisabled={!stepOneForm.formState.isValid}
-              isLoading={registering}
+              isLoading={false}
             >
               continue
             </RegisterButton>
           </RegisterForm>
         )}
         {step === 2 && (
-          <>
-            <RegisterForm
-              onSubmit={stepTwoForm.handleSubmit(handleStepTwoForm)}
-            >
-              <RegisterFormSection>account info</RegisterFormSection>
-              <RegisterInput
-                type="text"
-                placeholder="username"
-                {...stepTwoForm.register("username", { required: true })}
-              />
-              <RegisterInput
-                type="password"
-                placeholder="password"
-                {...stepTwoForm.register("password", { required: true })}
-              />
-              <RegisterInput
-                type="password"
-                placeholder="confirm password"
-                {...stepTwoForm.register("confirmPassword", {
-                  required: true,
-                  validate: (value) =>
-                    passwordFieldRef.current === value ||
-                    "passwords do not match",
-                })}
-              />
-              <RegisterFormActions>
-                <BackButton
-                  style={{ flex: "0.45" }}
-                  onClick={() => backOneStep()}
-                >
-                  back
-                </BackButton>
-                <RegisterButton
-                  style={{ flex: "0.45" }}
-                  type="submit"
-                  disabled={!stepTwoForm.formState.isValid}
-                  isDisabled={!stepTwoForm.formState.isValid}
-                  isLoading={registering}
-                >
-                  {registering ? <Loader className="loader" /> : "register"}
-                </RegisterButton>
-              </RegisterFormActions>
-            </RegisterForm>
-
-            <RegisteredContent>
-              <RegisteredInfo>
-                <input
-                  ref={inputFileRef}
-                  style={{ display: "none" }}
-                  type="file"
-                  onChange={(e) => handleOnChangeFile(e)}
-                />
-                <UploadFileButton
-                  onClick={() => handleUploadFile()}
-                  file={file}
-                >
-                  <User></User>
-                </UploadFileButton>
-                <SendButton
-                  disabled={!file || uploading}
-                  onClick={(e) => handleUploadUserAvatar(e)}
-                >
-                  {uploading ? "sending ..." : "send"}
-                </SendButton>
-              </RegisteredInfo>
-            </RegisteredContent>
-          </>
+          <RegisterForm onSubmit={stepTwoForm.handleSubmit(handleStepTwoForm)}>
+            <RegisterFormSection>account info</RegisterFormSection>
+            <RegisterInput
+              type="text"
+              placeholder="username"
+              {...stepTwoForm.register("username", { required: true })}
+            />
+            <RegisterInput
+              type="password"
+              placeholder="password"
+              {...stepTwoForm.register("password", { required: true })}
+            />
+            <RegisterInput
+              type="password"
+              placeholder="confirm password"
+              {...stepTwoForm.register("confirmPassword", {
+                required: true,
+                validate: (value) =>
+                  passwordFieldRef.current === value ||
+                  "passwords do not match",
+              })}
+            />
+            <RegisterFormActions>
+              <BackButton
+                style={{ flex: "0.45" }}
+                onClick={() => backOneStep()}
+              >
+                back
+              </BackButton>
+              <RegisterButton
+                style={{ flex: "0.45" }}
+                type="submit"
+                disabled={!stepTwoForm.formState.isValid}
+                isDisabled={!stepTwoForm.formState.isValid}
+                isLoading={false}
+              >
+                continue
+              </RegisterButton>
+            </RegisterFormActions>
+          </RegisterForm>
         )}
 
         {step === 3 && (
-          <RegisteredContent>
+          <RegisterForm>
             <RegisteredInfo>
               <input
                 ref={inputFileRef}
                 style={{ display: "none" }}
                 type="file"
+                accept="image/*"
                 onChange={(e) => handleOnChangeFile(e)}
               />
               <UploadFileButton onClick={() => handleUploadFile()} file={file}>
-                <User></User>
+                {!file && <User />}
               </UploadFileButton>
-              <SendButton
-                disabled={!file || uploading}
-                onClick={(e) => handleUploadUserAvatar(e)}
+            </RegisteredInfo>
+            <RegisterFormActions>
+              <BackButton
+                style={{ flex: "0.45" }}
+                onClick={() => backOneStep()}
               >
-                {uploading ? "sending ..." : "send"}
-              </SendButton>
+                back
+              </BackButton>
+              <RegisterButton
+                style={{ flex: "0.45" }}
+                type="button"
+                disabled={!canCreateUser()}
+                isDisabled={!canCreateUser()}
+                isLoading={false}
+                onClick={() => handleCreateUser()}
+              >
+                {registering ? <Loader /> : "register"}
+              </RegisterButton>
+            </RegisterFormActions>
+          </RegisterForm>
+        )}
+
+        {step === 4 && (
+          <RegisteredContent>
+            <RegisteredInfo>
+              <RegisteredInfoText>
+                account created, please go to{" "}
+                <LinkAlternative onClick={() => handleNavigateToLogin()}>
+                  login
+                </LinkAlternative>
+              </RegisteredInfoText>
             </RegisteredInfo>
           </RegisteredContent>
         )}
 
-        <LinkAlternative onClick={() => handleNavigateToLogin()}>
-          {step === 3 ? "or skip to login" : "login"}
-        </LinkAlternative>
+        {step !== 4 && (
+          <LinkAlternative onClick={() => handleNavigateToLogin()}>
+            login
+          </LinkAlternative>
+        )}
       </RegisterContent>
     </RegisterContainer>
   );
