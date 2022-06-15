@@ -247,46 +247,73 @@ const RegisterPage = () => {
           </RegisterForm>
         )}
         {step === 2 && (
-          <RegisterForm onSubmit={stepTwoForm.handleSubmit(handleStepTwoForm)}>
-            <RegisterFormSection>account info</RegisterFormSection>
-            <RegisterInput
-              type="text"
-              placeholder="username"
-              {...stepTwoForm.register("username", { required: true })}
-            />
-            <RegisterInput
-              type="password"
-              placeholder="password"
-              {...stepTwoForm.register("password", { required: true })}
-            />
-            <RegisterInput
-              type="password"
-              placeholder="confirm password"
-              {...stepTwoForm.register("confirmPassword", {
-                required: true,
-                validate: (value) =>
-                  passwordFieldRef.current === value ||
-                  "passwords do not match",
-              })}
-            />
-            <RegisterFormActions>
-              <BackButton
-                style={{ flex: "0.45" }}
-                onClick={() => backOneStep()}
-              >
-                back
-              </BackButton>
-              <RegisterButton
-                style={{ flex: "0.45" }}
-                type="submit"
-                disabled={!stepTwoForm.formState.isValid}
-                isDisabled={!stepTwoForm.formState.isValid}
-                isLoading={registering}
-              >
-                {registering ? <Loader className="loader" /> : "register"}
-              </RegisterButton>
-            </RegisterFormActions>
-          </RegisterForm>
+          <>
+            <RegisterForm
+              onSubmit={stepTwoForm.handleSubmit(handleStepTwoForm)}
+            >
+              <RegisterFormSection>account info</RegisterFormSection>
+              <RegisterInput
+                type="text"
+                placeholder="username"
+                {...stepTwoForm.register("username", { required: true })}
+              />
+              <RegisterInput
+                type="password"
+                placeholder="password"
+                {...stepTwoForm.register("password", { required: true })}
+              />
+              <RegisterInput
+                type="password"
+                placeholder="confirm password"
+                {...stepTwoForm.register("confirmPassword", {
+                  required: true,
+                  validate: (value) =>
+                    passwordFieldRef.current === value ||
+                    "passwords do not match",
+                })}
+              />
+              <RegisterFormActions>
+                <BackButton
+                  style={{ flex: "0.45" }}
+                  onClick={() => backOneStep()}
+                >
+                  back
+                </BackButton>
+                <RegisterButton
+                  style={{ flex: "0.45" }}
+                  type="submit"
+                  disabled={!stepTwoForm.formState.isValid}
+                  isDisabled={!stepTwoForm.formState.isValid}
+                  isLoading={registering}
+                >
+                  {registering ? <Loader className="loader" /> : "register"}
+                </RegisterButton>
+              </RegisterFormActions>
+            </RegisterForm>
+
+            <RegisteredContent>
+              <RegisteredInfo>
+                <input
+                  ref={inputFileRef}
+                  style={{ display: "none" }}
+                  type="file"
+                  onChange={(e) => handleOnChangeFile(e)}
+                />
+                <UploadFileButton
+                  onClick={() => handleUploadFile()}
+                  file={file}
+                >
+                  <User></User>
+                </UploadFileButton>
+                <SendButton
+                  disabled={!file || uploading}
+                  onClick={(e) => handleUploadUserAvatar(e)}
+                >
+                  {uploading ? "sending ..." : "send"}
+                </SendButton>
+              </RegisteredInfo>
+            </RegisteredContent>
+          </>
         )}
 
         {step === 3 && (

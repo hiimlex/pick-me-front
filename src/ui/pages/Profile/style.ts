@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {
   inputBackgroundColor,
   mainColorTheme,
-  mainTextColor,
   secondaryColorTheme,
   secondaryTextColor,
 } from "../../styles/theme";

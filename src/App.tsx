@@ -1,10 +1,17 @@
+import { AxiosError } from "axios";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { AppRouter } from "./app/router";
+import { getCategories } from "./app/services";
 import { RootState } from "./app/store";
-import { changeTheme, localStorageThemeKey } from "./app/store/slicers";
+import {
+  changeTheme,
+  createNotification,
+  localStorageThemeKey,
+  setCategories,
+} from "./app/store/slicers";
 import Notifier from "./ui/components/Notifier";
 import { NotifierContainer } from "./ui/components/Notifier/styles";
 import { GlobalStyle } from "./ui/styles/global";
@@ -31,6 +38,32 @@ function App() {
   useEffect(() => {
     handlePersistedTheme();
   }, [handlePersistedTheme]);
+
+  const handleGetCategories = useCallback(async () => {
+    try {
+      const { data } = await getCategories();
+
+      if (data) {
+        dispatch(setCategories(data));
+      }
+    } catch (err: any) {
+      if (err instanceof AxiosError) {
+        const { response } = err;
+
+        if (response && response.data && response.data.error) {
+          dispatch(
+            createNotification({
+              message: response.data.error,
+            })
+          );
+        }
+      }
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    handleGetCategories();
+  }, [handleGetCategories]);
 
   return (
     <ThemeProvider theme={{ theme: themeState }}>

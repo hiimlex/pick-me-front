@@ -33,7 +33,7 @@ const HomePage = () => {
       if (err instanceof AxiosError) {
         const { response } = err;
 
-        if (response) {
+        if (response && response.data && response.data.message) {
           dispatch(
             createNotification({
               message: response.data.message,

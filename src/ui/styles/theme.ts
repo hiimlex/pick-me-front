@@ -16,7 +16,7 @@ export const inputBackgroundColor = theme("theme", {
 });
 
 export const mainTextColor = theme("theme", {
-  light: "#333333",
+  light: "#222",
   dark: "#ffffff",
 });
 
@@ -26,7 +26,7 @@ export const secondaryTextColor = theme("theme", {
 });
 
 export const backgroundColorTheme = theme("theme", {
-  light: "#ffffff",
+  light: "#efefef",
   dark: "#333333",
 });
 

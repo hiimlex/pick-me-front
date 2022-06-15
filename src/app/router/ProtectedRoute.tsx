@@ -38,17 +38,17 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
           setShow(true);
         }
       } catch (err: any) {
+        setShow(true);
+        dispatch(removeUserState());
+        removeAuthToken();
+        removeAuthorizationHeaderToken();
+
         if (err instanceof AxiosError) {
           const { response } = err;
 
-          if (response) {
+          if (response && response.data && response.data.message) {
             dispatch(createNotification({ message: response.data.message }));
           }
-
-          setShow(true);
-          dispatch(removeUserState());
-          removeAuthToken();
-          removeAuthorizationHeaderToken();
         }
       }
     }
