@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { getProducts } from "../../../app/services";
 import { createNotification } from "../../../app/store/slicers/notifier.slicer";
 import Header from "../../components/Header";
+import ProductCard from "../../components/ProductCard";
 import {
   Filter,
   HomeContainer,
@@ -21,7 +22,9 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   const handleFilter = (filter: CategoryFilter) => {
-    setFilter(filter);
+    setFilter((curr) => {
+      return filter;
+    });
   };
 
   const handleGetProducts = useCallback(async () => {
@@ -82,7 +85,11 @@ const HomePage = () => {
               products
             </Filter>
           </HomeFilters>
-          <HomeProductsContainer></HomeProductsContainer>
+          <HomeProductsContainer>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </HomeProductsContainer>
         </HomeContent>
       </HomeContainer>
     </>

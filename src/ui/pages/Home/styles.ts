@@ -41,4 +41,19 @@ export const Filter = styled.span<{ active: boolean }>`
   ${({ active }) => active && activeStyle}
 `;
 
-export const HomeProductsContainer = styled.div``;
+export const HomeProductsContainer = styled.div`
+  column-count: 4;
+  -moz-column-count: 4;
+  -webkit-column-count: 4;
+  -moz-column-gap: 30px;
+  -webkit-column-gap: 30px;
+  column-gap: 30px;
+
+  position: relative;
+  z-index: 4;
+  height: auto;
+
+  .product__card {
+    margin: 20px;
+  }
+`;

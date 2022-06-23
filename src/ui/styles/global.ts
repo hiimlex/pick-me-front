@@ -98,7 +98,7 @@ export const LoaderContainer = styled.div`
   }
 
   .loaderApp {
-    fill: ${mainColorTheme} !important;
+    stroke: ${mainColorTheme};
     animation: rotation 2s linear infinite;
     transform: scale(0) !important;
   }

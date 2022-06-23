@@ -1,16 +1,18 @@
 export interface IProduct {
   id: string;
   categoryName: string;
+  imageData: Buffer;
   name: string;
   description: string;
   price: number;
   quantity: number;
-  image: Buffer;
+  postColor: string;
   owner: {
     _id: string;
     name: string;
     bio: string;
     email: string;
+    username: string;
   };
   createdAt: Date;
   updatedAt: Date;
@@ -28,4 +30,5 @@ export interface NewProduct {
   price: string;
   quantity: string;
   image: FileList;
+  postColor: string;
 }

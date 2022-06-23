@@ -20,7 +20,7 @@ import {
   ProfileProductsTitle,
 } from "./style";
 
-const renderBufferToImg = (buffer: Buffer): string => {
+export const renderBufferToImg = (buffer: Buffer): string => {
   return `data:image/jpg;base64,${buffer}`;
 };
 

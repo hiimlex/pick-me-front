@@ -5,3 +5,4 @@ export * from "./ShareModal";
 export * from "./ThemeSwitcher";
 export * from "./UserControl";
 export * from "./CoreInput";
+export * from "./ProductCard";
