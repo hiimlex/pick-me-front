@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../app/services";
+import { RootState, setProducts } from "../../../app/store";
 import { createNotification } from "../../../app/store/slicers/notifier.slicer";
 import Header from "../../components/Header";
 import ProductCard from "../../components/ProductCard";
@@ -14,24 +15,24 @@ import {
   HomeProductsContainer,
 } from "./styles";
 
-type CategoryFilter = "all" | "pictures" | "services" | "products";
+type CategoryFilter = "all" | "picture" | "service" | "product";
 
 const HomePage = () => {
   const [filter, setFilter] = useState<CategoryFilter>("all");
-  const [products, setProducts] = useState<any[]>([]);
   const dispatch = useDispatch();
 
-  const handleFilter = (filter: CategoryFilter) => {
-    setFilter((curr) => {
-      return filter;
-    });
+  const { products } = useSelector((state: RootState) => state.products);
+  const { categories } = useSelector((state: RootState) => state.categories);
+
+  const handleFilter = (filter: string) => {
+    setFilter(filter as CategoryFilter);
   };
 
   const handleGetProducts = useCallback(async () => {
     try {
       const { data } = await getProducts();
 
-      setProducts(data);
+      dispatch(setProducts(data));
     } catch (err: any) {
       if (err instanceof AxiosError) {
         const { response } = err;
@@ -66,24 +67,15 @@ const HomePage = () => {
             >
               all
             </Filter>
-            <Filter
-              active={filter === "pictures"}
-              onClick={() => handleFilter("pictures")}
-            >
-              pictures
-            </Filter>
-            <Filter
-              active={filter === "services"}
-              onClick={() => handleFilter("services")}
-            >
-              services
-            </Filter>
-            <Filter
-              active={filter === "products"}
-              onClick={() => handleFilter("products")}
-            >
-              products
-            </Filter>
+            {categories.map(({ name }, index) => (
+              <Filter
+                key={index}
+                active={filter === name}
+                onClick={() => handleFilter(name)}
+              >
+                {name}
+              </Filter>
+            ))}
           </HomeFilters>
           <HomeProductsContainer>
             {products.map((product) => (

@@ -1,4 +1,8 @@
-import { createSlice, SliceCaseReducers } from "@reduxjs/toolkit";
+import {
+  ActionCreatorWithPayload,
+  createSlice,
+  SliceCaseReducers,
+} from "@reduxjs/toolkit";
 import { IProduct } from "../../models";
 
 interface ProductsReducerState {
@@ -14,6 +18,15 @@ export const productsSlicer = createSlice<
     products: [],
   },
   reducers: {
-    loadProducts: (state) => {},
+    setProducts: (state, action) => {
+      state.products = action.payload;
+    },
   },
 });
+
+export const setProducts: ActionCreatorWithPayload<IProduct[], string> =
+  productsSlicer.actions.setProducts as any;
+
+const productsReducer = productsSlicer.reducer;
+
+export { productsReducer };

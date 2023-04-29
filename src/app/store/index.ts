@@ -3,6 +3,7 @@ import categoriesReducer from "./slicers/categories.slicer";
 import notifierReducer from "./slicers/notifier.slicer";
 import themeReducer from "./slicers/theme.slicer";
 import userReducer from "./slicers/user.slicer";
+import { productsReducer } from "./slicers";
 
 export interface GenericAction<T = any> {
   type: string;
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   notifier: notifierReducer,
   categories: categoriesReducer,
+  products: productsReducer,
 });
 
 const store = configureStore({
@@ -21,5 +23,7 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
+
+export * from "./slicers";
 
 export default store;

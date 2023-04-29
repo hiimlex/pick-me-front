@@ -42,9 +42,9 @@ export const Filter = styled.span<{ active: boolean }>`
 `;
 
 export const HomeProductsContainer = styled.div`
-  column-count: 4;
-  -moz-column-count: 4;
-  -webkit-column-count: 4;
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
   -moz-column-gap: 30px;
   -webkit-column-gap: 30px;
   column-gap: 30px;
