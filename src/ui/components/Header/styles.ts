@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   backgroundColorTheme,
   mainColorTheme,
@@ -64,15 +64,19 @@ export const HeaderNavLinks = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+`;
 
-  * {
-    margin: 0 24px;
-  }
+export const HeaderNavLink = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${mainTextColor};
+  cursor: pointer;
+  margin: 0 24px;
+  position: relative;
 
-  span {
-    font-size: 14px;
-    font-weight: 500;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
     color: ${mainColorTheme};
-    cursor: pointer;
   }
 `;

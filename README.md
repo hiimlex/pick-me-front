@@ -8,8 +8,9 @@ TODO:
 - [x] Create notifier
 - [x] Create input component
 - [x] Create absolute paths
-- [ ] Adjust folder structure
+- [x] Adjust folder structure
 - [ ] Modal context with store
+- [ ] Input validation
 - [ ] Finish product card
 - [ ] Finish product page
 - [ ] Finish share modal

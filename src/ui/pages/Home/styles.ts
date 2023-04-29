@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
-import { mainColorTheme, mainTextColor } from "../../styles/theme";
+import {
+  mainColorTheme,
+  mainTextColor,
+  secondaryColorTheme,
+} from "../../styles/theme";
 
 export const HomeContainer = styled.div`
   width: 100%;
@@ -37,6 +41,12 @@ export const Filter = styled.span<{ active: boolean }>`
   font-size: 14px;
   cursor: pointer;
   color: ${mainTextColor};
+
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    color: ${mainColorTheme};
+  }
 
   ${({ active }) => active && activeStyle}
 `;

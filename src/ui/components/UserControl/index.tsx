@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { User } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,6 +21,7 @@ const UserControl = () => {
   const [dropdown, setDropdown] = useState(false);
 
   const dropDownRef = useRef(null);
+  const triggerRef = useRef(null);
 
   const handleDropdownVisible = () => {
     setDropdown((curr) => !curr);
@@ -43,7 +43,9 @@ const UserControl = () => {
     const handleClickOutside = (event: Event) => {
       if (
         dropDownRef.current &&
-        !(dropDownRef as any).current.contains(event.target)
+        !(dropDownRef as any).current.contains(event.target) &&
+        triggerRef.current &&
+        !(triggerRef as any).current.contains(event.target)
       ) {
         setDropdown(false);
       }
@@ -57,9 +59,8 @@ const UserControl = () => {
 
   return (
     <UserControlContainer>
-      <UserControlPanel onClick={handleDropdownVisible}>
+      <UserControlPanel ref={triggerRef} onClick={handleDropdownVisible}>
         <span>@{user.username}</span>
-        <User className="icon" />
       </UserControlPanel>
       {dropdown && (
         <DropdownContainer ref={dropDownRef}>

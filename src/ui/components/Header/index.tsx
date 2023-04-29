@@ -1,16 +1,16 @@
 import { getAuthToken } from "app/services";
 import { AppDispatch, RootState, setFilters } from "app/store";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../Logo";
-import { ShareModal } from "../ShareModal";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { UserControl } from "../UserControl";
 import {
   HeaderContainer,
   HeaderContent,
   HeaderNav,
+  HeaderNavLink,
   HeaderNavLinks,
   SearchInput,
 } from "./styles";
@@ -18,7 +18,6 @@ import {
 const Header = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -31,10 +30,6 @@ const Header = () => {
   const hasUser = useMemo((): boolean => {
     return !!user && user && Object.keys(user).length > 0;
   }, [user]);
-
-  const handleShowShareModal = () => {
-    setShowModal(true);
-  };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilters({ name: e.target.value }));
@@ -51,16 +46,18 @@ const Header = () => {
           />
           <HeaderNav>
             <HeaderNavLinks>
-              {hasUser && (
-                <span onClick={() => handleShowShareModal()}>
-                  show your art
-                </span>
-              )}
+              {hasUser && <HeaderNavLink>show your art</HeaderNavLink>}
+
               {!hasToken && !hasUser && (
-                <span onClick={() => navigate("/login")}>login</span>
+                <HeaderNavLink onClick={() => navigate("/login")}>
+                  login
+                </HeaderNavLink>
               )}
+
               {!hasToken && !hasUser && (
-                <span onClick={() => navigate("/register")}>register</span>
+                <HeaderNavLink onClick={() => navigate("/register")}>
+                  register
+                </HeaderNavLink>
               )}
             </HeaderNavLinks>
             {hasUser && <UserControl />}
@@ -68,7 +65,6 @@ const Header = () => {
           </HeaderNav>
         </HeaderContent>
       </HeaderContainer>
-      {showModal && <ShareModal hideModal={setShowModal} />}
     </>
   );
 };
