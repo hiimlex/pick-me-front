@@ -36,4 +36,4 @@ const Notifier = ({
   );
 };
 
-export default Notifier;
+export { Notifier };

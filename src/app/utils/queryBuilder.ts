@@ -1,7 +1,16 @@
-export const queryBuilder = (query: Record<any, any>) => {
-  const queryString = Object.keys(query)
-    .map((key) => `${key}=${query[key]}`)
-    .join("&");
+export const queryBuilder = (path: string, filters?: Record<any, any>) => {
+  let url = path;
 
-  return "?" + queryString;
+  if (filters) {
+    const query = Object.keys(filters)
+      .map((key) => (filters[key] ? `${key}=${filters[key]}` : ""))
+      .join("&");
+
+    if (query) {
+      url += "?";
+      url += query;
+    }
+  }
+
+  return url;
 };

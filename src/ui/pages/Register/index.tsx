@@ -1,23 +1,19 @@
 import { AxiosError } from "axios";
 import { useRef, useState } from "react";
 import { Loader, User } from "react-feather";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { UseFormReturn, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { IUser, NewUser } from "../../../app/models";
-import { createUser } from "../../../app/services";
-import { createNotification } from "../../../app/store/slicers/notifier.slicer";
-import Logo from "../../components/Logo";
+import { NewUser } from "app/models";
+import { createUser } from "app/services";
+import { createNotification } from "app/store/slicers/";
+import { Logo } from "../../components";
 import {
   BackButton,
   LinkAlternative,
   RegisterButton,
   RegisterContainer,
   RegisterContent,
-  RegisteredContent,
-  RegisteredInfo,
-  RegisteredInfoText,
   RegisterForm,
   RegisterFormActions,
   RegisterFormSection,
@@ -25,6 +21,9 @@ import {
   RegisterSubtitle,
   RegisterTextArea,
   RegisterTitle,
+  RegisteredContent,
+  RegisteredInfo,
+  RegisteredInfoText,
   UploadFileButton,
 } from "./styles";
 
@@ -34,7 +33,7 @@ const RegisterPage = () => {
 
   const [step, setStep] = useState(1);
   const [file, setFile] = useState<File>();
-  const [user, setUser] = useState<IUser>();
+
   const [partialUser, setPartialUser] = useState<{ [key: string]: any }>({});
   const [registering, setRegistering] = useState(false);
 
@@ -305,4 +304,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export { RegisterPage };

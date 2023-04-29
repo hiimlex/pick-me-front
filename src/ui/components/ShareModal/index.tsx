@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
+import { AppDispatch, RootState } from "../../../app/store";
 import {
   ModalClose,
   ModalContainer,
@@ -14,13 +14,13 @@ import {
   RadioGroup,
 } from "./style";
 import { Loader, X } from "react-feather";
-import CoreInput from "../CoreInput";
+import { CoreInput } from "../CoreInput";
 import { useForm } from "react-hook-form";
 import { CoreButton } from "../../pages/Login/styles";
-import { createProduct } from "../../../app/services";
+import { createProduct } from "app/services";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { createNotification } from "../../../app/store/slicers";
+import { createNotification, fetchProducts } from "app/store/slicers";
 import { productsColorArr } from "../../styles/theme";
 
 interface ShareModalProps {
@@ -28,13 +28,15 @@ interface ShareModalProps {
 }
 
 const ShareModal = ({ hideModal }: ShareModalProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
   const categories = useSelector(
     (state: RootState) => state.categories.categories
   );
   const [sending, setSending] = useState(false);
 
   const shareForm = useForm({ mode: "all" });
+
   const postColorField = shareForm.watch("postColor");
 
   const handleHideModal = () => {
@@ -43,7 +45,9 @@ const ShareModal = ({ hideModal }: ShareModalProps) => {
 
   const handleOnSubmit = async (formData: any) => {
     setSending(true);
+
     const { category, image, name, price, quantity } = formData;
+
     if (category && image && name && price && quantity) {
       try {
         const { data } = await createProduct(formData);
@@ -51,9 +55,15 @@ const ShareModal = ({ hideModal }: ShareModalProps) => {
         if (data) {
           setSending(false);
           dispatch(
-            createNotification({ type: "success", message: "shared with success" })
+            createNotification({
+              type: "success",
+              message: "shared with success",
+            })
           );
+
           handleHideModal();
+
+          dispatch(fetchProducts());
         }
       } catch (err: any) {
         if (err instanceof AxiosError) {
@@ -140,7 +150,7 @@ const ShareModal = ({ hideModal }: ShareModalProps) => {
                     type="radio"
                     value={el}
                     placeholder="Blue"
-                    {...shareForm.register("postColor")}
+                    {...shareForm.register("postColor", { required: true })}
                   />
                   {el}
                 </label>
@@ -162,4 +172,4 @@ const ShareModal = ({ hideModal }: ShareModalProps) => {
   );
 };
 
-export default ShareModal;
+export { ShareModal };

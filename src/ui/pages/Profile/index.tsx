@@ -2,8 +2,8 @@ import { Buffer } from "buffer";
 import { Edit2, MessageSquare } from "react-feather";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from "../../../app/store";
-import Header from "../../components/Header";
+import { RootState } from "app/store";
+import { Header } from "ui/components";
 import {
   ProfileAvatar,
   ProfileAvatarContainer,
@@ -68,4 +68,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export { ProfilePage };

@@ -10,13 +10,13 @@ import {
 
 export const ModalOverlay = styled.div`
   z-index: 999;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 42px 0;
-  overflow: auto;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  overflow-x: hidden;
 
   background: #00000044;
 
@@ -34,6 +34,8 @@ export const ModalContainer = styled.div`
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
   padding: 18px;
   border-radius: 12px;
+
+  margin: 42px 0;
 
   display: flex;
   flex-direction: column;

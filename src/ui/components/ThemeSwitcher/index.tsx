@@ -1,4 +1,3 @@
-import React from "react";
 import { Moon, Sun } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
@@ -35,4 +34,4 @@ const ThemeSwitcher = ({ width, scale }: ThemeSwitcherProps) => {
   );
 };
 
-export default ThemeSwitcher;
+export { ThemeSwitcher };

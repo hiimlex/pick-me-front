@@ -1,19 +1,18 @@
+import { LoginModel } from "app/models";
+import { getCurrentUser } from "app/services";
+import {
+  authenticateUser,
+  setAuthorizationHeaderToken,
+} from "app/services/auth";
+import { setAuthToken } from "app/services/token";
+import { createNotification, setUserState } from "app/store";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { Loader } from "react-feather";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LoginModel } from "../../../app/models";
-import { getCurrentUser } from "../../../app/services";
-import {
-  authenticateUser,
-  setAuthorizationHeaderToken,
-} from "../../../app/services/auth";
-import { setAuthToken } from "../../../app/services/token";
-import { setUserState } from "../../../app/store/slicers";
-import { createNotification } from "../../../app/store/slicers/notifier.slicer";
-import Logo from "../../components/Logo";
+import { Logo } from "../../components";
 import {
   LinkAlternative,
   LoginButton,
@@ -151,4 +150,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export { LoginPage };

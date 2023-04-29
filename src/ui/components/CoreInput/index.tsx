@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Control, RegisterOptions, useController } from "react-hook-form";
 import { InputStyle } from "./styles";
 
@@ -48,4 +48,5 @@ const CoreInput = ({
     />
   );
 };
-export default CoreInput;
+
+export { CoreInput };

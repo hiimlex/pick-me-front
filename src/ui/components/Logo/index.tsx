@@ -24,4 +24,4 @@ const Logo = ({ clickable = false, callback, size = 32 }: LogoProps) => {
   );
 };
 
-export default Logo;
+export { Logo };

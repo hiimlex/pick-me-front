@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import { Loader } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
-import { LoaderContainer } from "../../ui/styles/global";
+import { LoaderContainer } from "ui/styles/global";
 import {
   getAuthToken,
   getCurrentUser,

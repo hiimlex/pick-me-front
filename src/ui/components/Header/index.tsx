@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { getAuthToken } from "app/services";
+import { AppDispatch, RootState, setFilters } from "app/store";
+import { ChangeEvent, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAuthToken } from "../../../app/services";
-import { RootState } from "../../../app/store";
-import Logo from "../Logo";
-import ShareModal from "../ShareModal";
-import ThemeSwitcher from "../ThemeSwitcher";
-import UserControl from "../UserControl";
+import { Logo } from "../Logo";
+import { ShareModal } from "../ShareModal";
+import { ThemeSwitcher } from "../ThemeSwitcher";
+import { UserControl } from "../UserControl";
 import {
   HeaderContainer,
   HeaderContent,
@@ -20,18 +20,24 @@ const Header = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
-  const hasToken = (): boolean => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const hasToken = useMemo((): boolean => {
     const token = getAuthToken();
 
     return !!token;
-  };
+  }, []);
+
+  const hasUser = useMemo((): boolean => {
+    return !!user && user && Object.keys(user).length > 0;
+  }, [user]);
 
   const handleShowShareModal = () => {
     setShowModal(true);
   };
 
-  const hasUser = (): boolean => {
-    return !!user && user && Object.keys(user).length > 0;
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilters({ name: e.target.value }));
   };
 
   return (
@@ -39,22 +45,25 @@ const Header = () => {
       <HeaderContainer>
         <HeaderContent>
           <Logo size={28} clickable={true} callback={() => navigate("/home")} />
-          <SearchInput placeholder="search for a art" />
+          <SearchInput
+            placeholder="search for an art"
+            onChange={handleSearchChange}
+          />
           <HeaderNav>
             <HeaderNavLinks>
-              {hasUser() && (
+              {hasUser && (
                 <span onClick={() => handleShowShareModal()}>
                   show your art
                 </span>
               )}
-              {!hasToken() && !hasUser() && (
+              {!hasToken && !hasUser && (
                 <span onClick={() => navigate("/login")}>login</span>
               )}
-              {!hasToken() && !hasUser() && (
+              {!hasToken && !hasUser && (
                 <span onClick={() => navigate("/register")}>register</span>
               )}
             </HeaderNavLinks>
-            {hasUser() && <UserControl />}
+            {hasUser && <UserControl />}
             <ThemeSwitcher />
           </HeaderNav>
         </HeaderContent>
@@ -64,4 +73,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export { Header };

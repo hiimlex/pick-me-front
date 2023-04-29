@@ -12,10 +12,9 @@ import {
   localStorageThemeKey,
   setCategories,
 } from "./app/store/slicers";
-import Notifier from "./ui/components/Notifier";
+import { Notifier } from "./ui/components/Notifier";
 import { NotifierContainer } from "./ui/components/Notifier/styles";
 import { GlobalStyle } from "./ui/styles/global";
-import Header from "./ui/components/Header";
 
 function App() {
   const dispatch = useDispatch();

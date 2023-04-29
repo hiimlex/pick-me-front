@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { User } from "react-feather";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  removeAuthorizationHeaderToken,
   removeAuthToken,
+  removeAuthorizationHeaderToken,
 } from "../../../app/services";
 import { RootState } from "../../../app/store";
 import { removeUserState } from "../../../app/store/slicers";
@@ -75,4 +74,4 @@ const UserControl = () => {
   );
 };
 
-export default UserControl;
+export { UserControl };

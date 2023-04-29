@@ -1,6 +1,6 @@
 import styled from "styled-components";
+import { NotifierType, mainTextColor, notifierTypes } from "../../styles/theme";
 import { NotifierPosition } from "./index";
-import { NotifierType, notifierTypes } from "../../styles/theme";
 
 export const NotifierContainer = styled.div`
   display: flex;
@@ -19,6 +19,7 @@ export const NotificationContent = styled.div<{
   font-size: 14px;
   font-weight: 500;
   border-radius: 8px;
+  color: ${mainTextColor};
 
   display: block;
 

@@ -20,10 +20,10 @@ export interface IProduct {
 
 export interface ICategory {
   _id: string;
-  name: string;
+  name: TCategoryFilter;
 }
 
-export interface NewProduct {
+export interface INewProduct {
   category: string;
   name: string;
   description: string;
@@ -31,4 +31,12 @@ export interface NewProduct {
   quantity: string;
   image: FileList;
   postColor: string;
+}
+
+export type TCategoryFilter = "" | "picture" | "service" | "product";
+
+export interface IGetProductsFilters {
+  category?: TCategoryFilter;
+  name?: string;
+  owner?: string;
 }

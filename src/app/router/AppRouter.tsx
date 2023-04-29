@@ -1,9 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "../../ui/pages/Home";
-import LoginPage from "../../ui/pages/Login";
-import ProfilePage from "../../ui/pages/Profile";
-import RegisterPage from "../../ui/pages/Register";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { HomePage, LoginPage, ProfilePage, RegisterPage } from "ui/pages";
 
 const AppRouter = () => {
   return (

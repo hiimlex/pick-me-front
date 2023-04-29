@@ -1,10 +1,13 @@
 import { AxiosResponse } from "axios";
-import { ICategory, NewProduct } from "../../models";
+import { ICategory, IGetProductsFilters, INewProduct } from "../../models";
 import { api, errToAxiosError } from "../api";
+import { queryBuilder } from "app/utils";
 
-async function getProducts() {
+async function getProducts(params?: IGetProductsFilters) {
   try {
-    const response = await api.get("/products");
+    const url = queryBuilder("/products", params);
+
+    const response = await api.get(url);
 
     return response;
   } catch (err: any) {
@@ -23,7 +26,7 @@ async function getCategories(): Promise<AxiosResponse<ICategory[]>> {
 }
 
 async function createProduct(
-  body: NewProduct
+  body: INewProduct
 ): Promise<AxiosResponse<{ file: any }>> {
   try {
     const formData = new FormData();
